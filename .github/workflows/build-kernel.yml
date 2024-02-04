@@ -203,11 +203,11 @@ jobs:
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-aosp/bin:$PATH
         export KBUILD_BUILD_HOST=Github-Action
         export KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
-        make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.KERNEL_CONFIG }} >> log1.txt
+        make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} ${{ env.KERNEL_CONFIG }} &> /dev/null
         if [ ${{ env.ENABLE_CCACHE }} = true ]; then
-            make -j$(nproc --all) CC="ccache clang" O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} >> log2.txt
+            make -j$(nproc --all) CC="ccache clang" O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} &> /dev/null
         else
-            make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} >> log3.txt
+            make -j$(nproc --all) CC=clang O=out ARCH=${{ env.ARCH }} ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }} &> /dev/null
         fi
 
     - name: Check a kernel output files
